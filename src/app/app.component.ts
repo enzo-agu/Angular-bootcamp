@@ -7,4 +7,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'spotify';
+
+  // opcionalVariable: string | number = 0
+
+  // array: Array<Car> = [{
+  //   name:'ee',
+  //   model:'ddd',
+  // }]
 }
+
+// interface Car {
+//   name: string;
+//   model: string;
+//   year?: number;
+// }
