@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
 
   customOptions: Array<any> = []
 
-   constructor(private router: Router, private trackService: TracksService) { }
+   constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.mainMenu.defaultOptions = [
@@ -67,14 +67,14 @@ export class SidebarComponent implements OnInit {
       }
     ]
 
-    this.trackService.dataTracksRandom$
-    .subscribe(response=>{
-      console.log(response)
-      this.customOptions.push({
-        name:response[0].name,
-        router:[]
-      })
-    })
+    // this.trackService.dataTracksRandom$
+    // .subscribe(response=>{
+    //   console.log(response)
+    //   this.customOptions.push({
+    //     name:response[0].name,
+    //     router:[]
+    //   })
+    // })
 
   }
 
