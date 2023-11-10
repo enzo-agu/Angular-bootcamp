@@ -52,7 +52,7 @@ export class TracksService {
   }
 
   getAllTracks$(): Observable<any> {
-    return this.httpClient.get(`${this.URL}/tracks`)
+    return this.httpClient.get(`${this.URL}/api/1.0/tracks`)
       .pipe(
         map((dataRaw: any) => {
           return dataRaw.data
@@ -61,7 +61,7 @@ export class TracksService {
   }
 
   getAllRandom$(): Observable<any> {
-    return this.httpClient.get(`${this.URL}/tracks`)
+    return this.httpClient.get(`${this.URL}/api/1.0/tracks`)
       .pipe(
         mergeMap(({ data }: any) => this.skipTrackById(data, 1)),
          catchError((err)=>{
