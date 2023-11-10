@@ -15,6 +15,7 @@ export class InjectSessionInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     try {
+      
       const token = this.cookie.get('token');
       let newRequest = request;
       newRequest = request.clone({
@@ -26,7 +27,7 @@ export class InjectSessionInterceptor implements HttpInterceptor {
       return next.handle(newRequest);
 
     } catch (error) {
-      console.log('Se ha rompido', error);
+      console.log('Error', error);
       return next.handle(request);
     }
   }

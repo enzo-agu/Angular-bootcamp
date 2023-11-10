@@ -36,8 +36,8 @@ export class LoginPageComponent implements OnInit {
     this.asAuthService.sendCredentials(email, password)
       .subscribe(response => {
         console.log('sesion iniciada ok',response)
-        const {data, tokenSesion}= response
-        this.cookie.set('token', tokenSesion, 4, '/')
+        // const {data, tokenSession}= response
+        // this.cookie.set('token', tokenSession, 4, '/')
         this.router.navigate(['/', 'tracks'])
         
       },

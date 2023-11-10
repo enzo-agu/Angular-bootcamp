@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   api: 'https://backend-spotify-bootcamps-tribe.onrender.com',
 
 };

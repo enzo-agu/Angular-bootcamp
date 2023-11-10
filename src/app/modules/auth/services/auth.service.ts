@@ -23,8 +23,8 @@ export class AuthService {
       .pipe(
         tap(
           (response: any) => {
-            const { tokenSession, data } = response
-            this.cookie.set('token_service',tokenSession, 4, '/')
+            const { tokenSession } = response
+            this.cookie.set('token',tokenSession, 4, '/')
           }
         )
       )
