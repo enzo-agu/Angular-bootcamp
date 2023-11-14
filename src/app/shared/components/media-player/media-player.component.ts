@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.model';
 import { MultimediaService } from '@shared/services/multimedia.service';
 import { Subscription } from 'rxjs';
@@ -9,17 +9,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./media-player.component.css']
 })
 export class MediaPlayerComponent implements OnInit, OnDestroy {
-  mockCover: TrackModel = {
-    cover: 'https://akamai.sscdn.co/uploadfile/letras/playlists/0/7/5/5/0755db9a28294510852de54840015412.jpg',
-    album: 'Californication',
-    name: 'Californication',
-    url: 'http://localhost/track.mp3',
-    _id: 1
-  }
+  @ViewChild('progressBar') progressBar: ElementRef = new ElementRef('')
 
-  listObserver$: Array<Subscription> =[]
+  listObserver$: Array<Subscription> = []
+  state: string = 'paused'
 
-  constructor(private multimedia: MultimediaService) { }
+  constructor(public multimedia: MultimediaService) { }
 
   ngOnInit(): void {
     // const observer1$: Subscription = this.multimedia.callback.subscribe(
@@ -30,21 +25,41 @@ export class MediaPlayerComponent implements OnInit, OnDestroy {
 
     // this.listObserver$ = [observer1$]
 
-    const observable1$= this.multimedia.myObservable1$
-    .subscribe(
-      (responseOk)=>{
-        console.log('👍', responseOk)
-      },
-      (responseFail)=>{
-        console.log('se tapo', responseFail)
-      }
-    )
+    // const observable1$= this.multimedia.myObservable1$
+    // .subscribe(
+    //   (responseOk)=>{
+    //     console.log('👍', responseOk)
+    //   },
+    //   (responseFail)=>{
+    //     console.log('se tapo', responseFail)
+    //   }
+    // )
+
+    // this.multimedia.trackInfo$.subscribe(
+    //   res => console.log('reroducción de la canción', res)
+    // )
+
+    const observer1$ = this.multimedia.playerStatus$
+      .subscribe(status => this.state = status)
+
+    this.listObserver$ = [observer1$]
 
   }
 
+
   ngOnDestroy(): void {
-    this.listObserver$.forEach(u=>u.unsubscribe())
+    this.listObserver$.forEach(u => u.unsubscribe())
     console.log('🔴🔴🔴🔴🔴 BOOM!')
+  }
+
+  handlePosition(event: MouseEvent): void {
+    const { clientX } = event
+    const elNative: HTMLElement = this.progressBar.nativeElement
+    const { x, width } = elNative.getBoundingClientRect()
+    const clickX = clientX - x
+    const precentageFromX = (clickX * 100) / width
+    this.multimedia.seekAudio(precentageFromX)
+    console.log(`clienteX : ${precentageFromX}`)
   }
 
 }
