@@ -21,7 +21,7 @@ export class TracksService {
     _id: Number
   ): Promise<TrackModel[]> {
     return new Promise((resolve, reject) => {
-      const tmpArr = trackArr.filter((el) => el._id !== _id);
+      const tmpArr = trackArr.filter((el) => el.uid !== _id);
       resolve(tmpArr);
     });
   }
@@ -29,26 +29,6 @@ export class TracksService {
 
   constructor(private httpClient: HttpClient) {
 
-
-    // const { data }: any = (dataRaw as any).default
-
-    // this.dataTracksTrending$ = of(data)
-    // this.dataTracksRandom$ = new Observable((observer) => {
-
-    //   const trackExample: TrackModel = {
-    //     _id: 9,
-    //     name: 'Leve',
-    //     album: 'Cartel de Santa',
-    //     url: 'http://',
-    //     cover: 'https://cdns-images.dzcdn.net/images/cover/b41071397b93014a617c4a3a8d544e75/500x500.jpg'
-    //   }
-
-
-    //   setTimeout(() => {
-    //     observer.next([trackExample])
-    //   }, 3500)
-
-    // })
   }
 
   getAllTracks$(): Observable<any> {

@@ -1,0 +1,55 @@
+.input-search {
+    margin: 10px 0 0 50px;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    justify-content: space-around;
+}
+
+.form input{
+    border-radius: 8px;
+}
+
+.form button{
+    border-radius: 8px;
+    /* color:aliceblue; */
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.container {
+    display: flex;
+    padding: 30px 10px 0 10px;
+    gap: 30px;
+}
+
+.container img{
+    border-radius: 8px;
+}
+
+.btn-delete{
+    border-radius: 10px;
+    height: 70%;
+}
+
+.btn-edit{
+    border-radius: 10px;
+    height: 14%;
+    width: 30%;
+}
+
+.input-edit{
+    border-radius: 10px;
+}
+
+input.ng-invalid.ng-touched {
+    border: solid 2px red !important
+}
+
+input.ng-valid.ng-touched {
+    border: solid 2px rgb(81,255,0) !important
+}

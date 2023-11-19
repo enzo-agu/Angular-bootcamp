@@ -1,0 +1,33 @@
+<h2>Agregar canción</h2>
+<form (ngSubmit)="formTrack($event)" [formGroup]="Form" class="form">
+    <div>
+        <input formControlName="name" type="text" placeholder="Name" class="form-input" />
+    </div>
+    <div>
+        <input formControlName="album" type="text" placeholder="Album" class="form-input" />
+    </div>
+    <div>
+        <input formControlName="cover" type="text" placeholder="Cover" class="form-input" />
+    </div>
+    <div>
+        <input formControlName="artist" type="text" placeholder="Artist" class="form-input" />
+    </div>
+    <div>
+        <button [disabled]="Form.invalid" class="btn">Añadir</button>
+    </div>
+</form>
+
+<ul>
+    <li *ngFor="let track of tracks; let i = index" class="list-item">
+        <div class="container">
+            <img appImgBroken width="180px" height="180px" class="" [src]="track.cover" [alt]="track.name">
+            <div class="">{{track.name}}</div>
+            <div class="">{{track.artist}}</div>
+            <button class="btn-delete" (click)="deleteTrack(track)">Eliminar</button>
+            <form [formGroup]="editTrackForm" (ngSubmit)="editTrackName$(track, track.name)">
+                <input formControlName="nameTrack" class="input-edit" placeholder="Editar Nombre" type="text" id="name" name="name" #name>
+                <button class="btn-edit" type="submit">Editar</button>
+            </form>
+        </div>
+    </li>
+</ul>

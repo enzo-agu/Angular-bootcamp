@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@modules/auth/services/auth.service';
 import { TracksService } from '@modules/tracks/services/tracks.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,9 +17,12 @@ export class SidebarComponent implements OnInit {
 
   customOptions: Array<any> = []
 
-   constructor(private router: Router) { }
+  constructor(private router: Router, private cookieService: CookieService, private logService: AuthService) { }
 
   ngOnInit(): void {
+
+    const roleUser = this.cookieService.get('roleUser');
+
     this.mainMenu.defaultOptions = [
       {
         name: 'Home',
@@ -37,6 +42,7 @@ export class SidebarComponent implements OnInit {
       }
     ]
 
+
     this.mainMenu.accessLink = [
       {
         name: 'Crear lista',
@@ -45,8 +51,23 @@ export class SidebarComponent implements OnInit {
       {
         name: 'Canciones que te gustan',
         icon: 'uil-heart-medical'
-      }
+      },
     ]
+    
+    
+    if (roleUser === 'admin') {
+      this.mainMenu.defaultOptions.push({
+        name: 'Admin',
+        icon: 'uil uil-user-check',
+        router: ['/', 'admin'],
+      },
+      
+
+      )
+    }
+
+
+   
 
     this.customOptions = [
       {
@@ -66,25 +87,13 @@ export class SidebarComponent implements OnInit {
         router: ['/']
       }
     ]
-
-    // this.trackService.dataTracksRandom$
-    // .subscribe(response=>{
-    //   console.log(response)
-    //   this.customOptions.push({
-    //     name:response[0].name,
-    //     router:[]
-    //   })
-    // })
-
   }
 
-  // goTo($event:any):void{
-  //   this.router.navigate(['/', 'favorites'], {
-  //     queryParams:{
-  //       key1:'Value 1',
-  //       key2:'Value 2'
-  //     }
-  //   })
-  //   console.log($event)
-  // }
+  closeSessionAdmin(): void {
+    this.cookieService.deleteAll('/');
+    this.router.navigate(['auth/login']); 
+   
+  }
+ 
+
 }

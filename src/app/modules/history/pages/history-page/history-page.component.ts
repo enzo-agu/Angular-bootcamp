@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./history-page.component.css']
 })
 export class HistoryPageComponent {
-  listResults$:Observable <any> = of([])
+  listResults$: TrackModel[] = []
 
   constructor(private searchService:SearchService,){
 
@@ -17,8 +17,12 @@ export class HistoryPageComponent {
 
   receiveData(event:string): void {
     // this.searchService.searchTracks$(event)
-      this.listResults$ = this.searchService.searchTracks$(event)
-    
+    this.searchService.searchTracks$(event).subscribe((tracks: TrackModel[]) => {
+      const oneTrack = tracks.filter((track, index, selfArray) =>
+        index === selfArray.findIndex(t => t.uid === track.uid)
+      );
+      this.listResults$ = oneTrack;
+    })    
   }
 
 }

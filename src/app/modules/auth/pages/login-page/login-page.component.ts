@@ -36,8 +36,9 @@ export class LoginPageComponent implements OnInit {
     this.asAuthService.sendCredentials(email, password)
       .subscribe(response => {
         console.log('sesion iniciada ok',response)
-        // const {data, tokenSession}= response
-        // this.cookie.set('token', tokenSession, 4, '/')
+        const {data, tokenSession}= response
+        this.cookie.set('token', tokenSession, 4, '/')
+        this.cookie.set('roleUser', data.role, 4, '/');
         this.router.navigate(['/', 'tracks'])
         
       },
@@ -46,5 +47,7 @@ export class LoginPageComponent implements OnInit {
           console.log('error 🔴🔴')
         })
   }
+
+  
 
 }
